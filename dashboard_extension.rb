@@ -10,6 +10,12 @@ class DashboardExtension < Radiant::Extension
     tab "&#10025;" do
       add_item 'Activity', "/admin/dashboard"
     end
+    Radiant::AdminUI::RegionSet.class_eval do
+      def delete(region=nil, partial=nil)
+        raise ArgumentError, "You must specify a region and partial to delete" unless region and partial
+        self[region].delete(partial)
+      end
+    end
     Radiant::AdminUI.class_eval do
       attr_accessor :dashboard
     end
