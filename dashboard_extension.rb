@@ -15,6 +15,11 @@ class DashboardExtension < Radiant::Extension
         raise ArgumentError, "You must specify a region and partial to delete" unless region and partial
         self[region].delete(partial)
       end
+
+      def contains?(region=nil, partial=nil)
+        raise ArgumentError, "You must specify a region and partial to search for" unless region and partial
+        return ( @regions.has_key?(region.to_sym) && @regions[region.to_sym].include?(partial.to_s) )
+      end
     end
     Radiant::AdminUI.class_eval do
       attr_accessor :dashboard
